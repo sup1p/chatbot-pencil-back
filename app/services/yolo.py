@@ -11,10 +11,19 @@ async def detect_pencil(image: UploadFile) -> bool:
     frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
     results = model(frame)
+    person_count = 0
     for result in results:
         for box in result.boxes:
             cls_id = int(box.cls[0])
-            class_name = model.names[cls_id]
-            if class_name.lower() == "pencil" or class_name.lower() == "knife" or class_name.lower() == "baseball bat":
+            class_name = model.names[cls_id].lower()
+
+            if class_name in {"pencil", "knife", "baseball bat"}:
                 return True
+
+            if class_name == "person":
+                person_count += 1
+
+        # Если больше одного человека — возвращаем True
+    if person_count > 1:
+        return True
     return False
