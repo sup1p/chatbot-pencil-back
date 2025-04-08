@@ -14,3 +14,6 @@ app.add_middleware(
 
 app.include_router(verify_pencil.router, prefix="/api", tags=["Access verification"])
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
+@app.get("/")
+def root():
+    return {"message": "Backend is alive"}
