@@ -17,13 +17,12 @@ async def detect_pencil(image: UploadFile) -> bool:
             cls_id = int(box.cls[0])
             class_name = model.names[cls_id].lower()
 
-            if class_name in {"pencil", "knife", "baseball bat"}:
+            if class_name in {"pencil", "cell phone", "remote"}:
                 return True
 
             if class_name == "person":
                 person_count += 1
 
-        # Если больше одного человека — возвращаем True
     if person_count > 1:
         return True
     return False

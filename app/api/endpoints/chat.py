@@ -15,7 +15,6 @@ class ChatRequest(BaseModel):
 async def chat(request: ChatRequest,authorization: str = Header(None)):
     if not GEMINI_API_KEY:
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY is not set")
-    print("GEMINI_API_KEY:", GEMINI_API_KEY)
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or invalid token")
 
